@@ -11,10 +11,22 @@ def shorturl(link):return get("https://tinyurl.com/api-create.php?url="+link).te
 data = []
 result = {"creator":"Tobz","result": data}
 url = bsoup("https://moddroid.com/?s=free")
-for tobz in url.findAll('div', class_='col-12 col-md-6 mb-4'):
-	title = tobz.a['title']
-	link = tobz.a['href']
-	image = tobz.img['src']
-	versi = tobz.find('div', class_='text-truncate text-muted d-flex align-items-center').text.replace('\n',' ')
-	hasil = data.append({"title":title,"link":link,"image":image,"versi":versi})
+tobz = url.find('div', class_='col-12 col-md-6 mb-4')
+title = tobz.a['title']
+link = tobz.a['href']
+image = tobz.img['src']
+info = bsoup(link)
+dl = info.find('a', class_='btn btn-secondary btn-block mb-3')['href']
+dl2 = bsoup(dl)
+txt = info.findAll('tr')
+app_name = txt[0].text.replace('App Name','').replace('\n','')
+publisher = txt[1].text.replace('Publisher','').replace('\n','')
+genre = txt[2].text.replace('Genre','').replace('\n','')
+size = txt[3].text.replace('Size','').replace('\n','')
+latest_version = txt[4].text.replace('Latest Version','').replace('\n','')
+mod_info = txt[5].text.replace('Mod Info','').replace('\n','')
+ps_link = txt[6].text.replace('Get it On','').replace('\n','')+txt[6].a['href']
+update = txt[7].text.replace('Update','').replace('\n','')
+download = dl2.find('div', class_='collapse').a['href']
+hasil = data.append({"title":title,"link":link,"image":image,"publisher":publisher,"genre":genre,"size":size,"latest_version":latest_version,"mod_info":mod_info,"ps_link":ps_link,"update":update,"download":download})
 print(json.dumps(result,indent=4,ensure_ascii=False))
