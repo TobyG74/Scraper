@@ -12,7 +12,7 @@ hasilnya = []
 result = {"creator":"Tobz","result": hasilnya}
 url = bsoup("https://drakorindo.live/?s=love")
 for tobz in url.findAll('article'):
-    title = tobz.h3.text.replace('\n\n\t\t\t\t\tDrama Korea ','').replace('\n\n\t\t\t\t\tDrama ','')
+    title = tobz.h3.text.replace('\n\n\t\t\t\t\tDrama Korea ','').replace('\n\n\t\t\t\t\tDrama ','').replace('\t\t\t\t\n','')
     link = tobz.a['href']
     image = tobz.img['src']
     upload = tobz.find('span', class_='mh-meta-date updated').text
